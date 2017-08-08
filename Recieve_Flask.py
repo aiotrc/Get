@@ -1,15 +1,15 @@
-from flask import Flask, request
+from flask import Flask, request, json
 from timeit import default_timer
 
 app = Flask(__name__)
-json = {
-    "humidity": {
-        "value": "27",
-        "time": "2016-09-24T23:05:34Z"
+my_json = {
+    'humidity': {
+        'value': '27',
+        'time': '2016-09-24T23:05:34Z'
     },
-    "temperature": {
-        "value": "24",
-        "time": "2016-09-24T23:05:34Z"
+    'temperature': {
+        'value': '24',
+        'time': '2016-09-24T23:05:34Z'
     }
 }
 
@@ -17,15 +17,16 @@ json = {
 @app.route('/Get', methods=['POST'])
 def get():
     start = default_timer()
-    duration = default_timer() - start
     print(request.json['agent_id'])
     # TODO mqtt
-    return json
+    duration = default_timer() - start
+    return json.dumps(my_json)
+    # return 'Request Timeout!'
 
 
 @app.errorhandler(404)
 def page_not_found():
-    return 'wrong url'
+    return 'Page Not Found!'
 
 
 if __name__ == '__main__':
