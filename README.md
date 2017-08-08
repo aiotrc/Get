@@ -1,9 +1,9 @@
 # Get
 
-<h1>API</h1>
+<h2>API</h2>
 <p>You post me json in this url : http://{host}:{port}/Agent</p>
 <p>json sample : <br/>
-<p>
+<code>
     {
         agent_id : 12345678,
         thing_id : 87654321
@@ -13,4 +13,4 @@
             'color'
         ]
     }
-</p>
+</code>
