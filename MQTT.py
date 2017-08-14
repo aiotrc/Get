@@ -1,4 +1,16 @@
 import paho.mqtt.client as mqtt  # import the client1
+import json
+
+my_json = {
+    'humidity': {
+        'value': '28',
+        'time': '2016-09-24T23:05:34Z'
+    },
+    'temperature': {
+        'value': '24',
+        'time': '2016-09-24T23:05:34Z'
+    }
+}
 
 
 def on_message(client, userdata, message):
@@ -8,21 +20,27 @@ def on_message(client, userdata, message):
     print("message retain flag=", message.retain)
 
 
-broker_address = "127.0.0.1"
-client = mqtt.Client("P1")  # create new instance
-
-client.on_message = on_message  # attach function to callback
-
-client.connect(broker_address, 5000)  # connect to broker
-client.loop_start()  # start the loop
-
-print("Subscribing to topic", "agent_id")
-client.subscribe("agent_id")
-
-print("Publishing message to topic", "agent_id")
-client.publish("agent_id", "50")
-
-client.loop_stop()  # stop the loop
-
-if __name__ == "__main__":
+def on_publish(client, userdata, result):
+    print("data published \n")
     pass
+
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+    client.subscribe("123")
+    client.publish("123", json.dumps(my_json))
+
+
+def on_disconnect(client, userdata, rc):
+    print("disconnected with rtn code [%d]" % (rc))
+
+
+client = mqtt.Client("MQTTTest")
+client.on_message = on_message
+client.on_publish = on_publish
+client.on_connect = on_connect
+client.on_disconnect = on_disconnect
+
+if __name__ == '__main__':
+    client.connect("iot.ceit.aut.ac.ir", 58904)
+    client.loop_forever()
