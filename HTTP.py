@@ -1,8 +1,9 @@
-import requests, json
+import json
+import requests
 
 url = 'http://localhost:5000/Get'
 my_json = {
-    'agent_id': '123',
+    'agent_id': '2',
     'thing_id': '1',
     'states': [
         'temperature',
@@ -20,4 +21,4 @@ if __name__ == '__main__':
         print('Too Many Requests')
     else:
         data = json.loads(r.text)
-        print(data['humidity'])
+        print(data[my_json['states'][0]])

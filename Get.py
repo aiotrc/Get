@@ -2,7 +2,7 @@ from flask import Flask, request, json
 from timeit import default_timer
 import paho.mqtt.client as mqtt
 
-req = ''
+req = '-'
 JSON = {}
 
 
@@ -21,9 +21,10 @@ def on_publish(client, userdata, result):
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
+    # global JSON
+    # JSON = {}
     global req
-    if req != '':
-        client.subscribe(req)
+    client.subscribe(req)
 
 
 def on_disconnect(client, userdata, rc):
@@ -41,8 +42,8 @@ my_json = {
         'time': '2016-09-24T23:05:34Z'
     }
 }
-max_duration = 10
-max_id = 3
+max_duration = 5
+max_id = 2
 host = '127.0.0.1'
 port = 5000
 broker_address = 'iot.ceit.aut.ac.ir'  # '127.0.0.1'
@@ -67,19 +68,17 @@ def get():
     # MQTT
     global req
     req = request.json['agent_id']  # TODO Correct the format
-    if req != '':
-        client.subscribe(req)
+    client.subscribe(req)
 
     global JSON
     while default_timer() - agent_connection_time[i] < max_duration and JSON == {}:
         pass
     duration = default_timer() - agent_connection_time[i]
     agent_connection_time[i] = False
-    JSON = {}
-    req = ''
+    req = '-'
     if duration > max_duration:
         return '408'  # Request Timeout
-    return json.dumps(JSON)
+    # return json.dumps(JSON)
 
 
 @app.errorhandler(404)

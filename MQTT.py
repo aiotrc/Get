@@ -1,4 +1,4 @@
-import paho.mqtt.client as mqtt  # import the client1
+import paho.mqtt.client as mqtt
 import json
 
 my_json = {
@@ -11,6 +11,8 @@ my_json = {
         'time': '2016-09-24T23:05:34Z'
     }
 }
+broker_address = 'iot.ceit.aut.ac.ir'  # '127.0.0.1'
+broker_port = 58904  # 9998
 
 
 def on_message(client, userdata, message):
@@ -18,6 +20,7 @@ def on_message(client, userdata, message):
     print("message topic=", message.topic)
     print("message qos=", message.qos)
     print("message retain flag=", message.retain)
+    client.publish("1", json.dumps(my_json))
 
 
 def on_publish(client, userdata, result):
@@ -27,8 +30,8 @@ def on_publish(client, userdata, result):
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
-    client.subscribe("123")
-    client.publish("123", json.dumps(my_json))
+    client.subscribe("1")
+    client.publish("1", json.dumps(my_json))
 
 
 def on_disconnect(client, userdata, rc):
@@ -42,5 +45,5 @@ client.on_connect = on_connect
 client.on_disconnect = on_disconnect
 
 if __name__ == '__main__':
-    client.connect("iot.ceit.aut.ac.ir", 58904)
+    client.connect(host=broker_address, port=broker_port)
     client.loop_forever()
