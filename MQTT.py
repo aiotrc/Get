@@ -9,36 +9,39 @@ my_json = {
     'temperature': {
         'value': '24',
         'time': '2016-09-24T23:05:34Z'
+    },
+    'something': {
+        'value': 'sth',
+        'time': 'some time'
     }
 }
 broker_address = 'iot.ceit.aut.ac.ir'  # '127.0.0.1'
 broker_port = 58904  # 9998
+agent_id = '1'
 
 
 def on_message(client, userdata, message):
-    print("message received ", str(message.payload.decode("utf-8")))
-    print("message topic=", message.topic)
-    print("message qos=", message.qos)
-    print("message retain flag=", message.retain)
-    client.publish("1", json.dumps(my_json))
+    # print('Massage')
+    client.publish(agent_id, json.dumps(my_json))
 
 
 def on_publish(client, userdata, result):
-    print("data published \n")
+    # print('Publish')
     pass
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
-    client.subscribe("1")
-    client.publish("1", json.dumps(my_json))
+    # print('Connect')
+    client.subscribe(agent_id)
+    client.publish(agent_id, json.dumps(my_json))
 
 
 def on_disconnect(client, userdata, rc):
-    print("disconnected with rtn code [%d]" % (rc))
+    # print('Disconnect')
+    pass
 
 
-client = mqtt.Client("MQTTTest")
+client = mqtt.Client('MQTTTest')
 client.on_message = on_message
 client.on_publish = on_publish
 client.on_connect = on_connect

@@ -3,7 +3,7 @@ import requests
 
 url = 'http://localhost:5000/Get'
 my_json = {
-    'agent_id': '2',
+    'agent_id': '1',
     'thing_id': '1',
     'states': [
         'temperature',
@@ -20,5 +20,9 @@ if __name__ == '__main__':
     elif r.text.__eq__('429'):
         print('Too Many Requests')
     else:
-        data = json.loads(r.text)
-        print(data[my_json['states'][0]])
+        try:
+            data = json.loads(r.text)
+            # print(data[my_json['states'][0]])
+            print(data)
+        except Exception:
+            print('Wrong Output Format')
