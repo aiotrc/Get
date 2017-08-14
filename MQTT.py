@@ -17,7 +17,7 @@ my_json = {
 }
 broker_address = 'iot.ceit.aut.ac.ir'  # '127.0.0.1'
 broker_port = 58904  # 9998
-agent_id = '1'
+agent_id = 'b07882d6-5c28-597b-89f9-d250f74b0bad'
 
 
 def on_message(client, userdata, message):

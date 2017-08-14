@@ -45,6 +45,7 @@ client.on_disconnect = on_disconnect
 
 @app.route('/Get', methods=['POST'])
 def get():
+    # TODO Multi Thread for many tasks!
     i = 0
     while agent_connection_time[i]:
         i = i + 1
@@ -53,7 +54,7 @@ def get():
     agent_connection_time[i] = default_timer()
 
     global req
-    req = request.json['agent_id']  # TODO Correct the format
+    req = request.json['agent_id']  # TODO Correct the format of MQTT
     client.subscribe(req)
 
     global JSON
