@@ -1,3 +1,6 @@
+"""
+A TEST FILE FOR http
+"""
 import json
 import requests
 
@@ -20,9 +23,5 @@ if __name__ == '__main__':
     elif r.text.__eq__('429'):
         print('Too Many Requests')
     else:
-        try:
-            data = json.loads(r.text)
-            # print(data[my_json['states'][0]])
-            print(data)
-        except Exception:
-            print('Wrong Output Format')
+        data = json.loads(r.text)
+        print(data)

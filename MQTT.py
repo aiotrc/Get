@@ -1,43 +1,66 @@
+"""
+A TEST FILE FOR mqtt
+"""
 import paho.mqtt.client as mqtt
+from Get import broker_address, broker_port
 import json
 
-my_json = {
-    'humidity': {
-        'value': '28',
-        'time': '2016-09-24T23:05:34Z'
+my_json = [
+    {
+        'id': 0,
+        'humidity': {
+            'value': '28',
+            'time': '2016-09-24T23:05:34Z'
+        },
+        'temperature': {
+            'value': '24',
+            'time': '2016-09-24T23:05:34Z'
+        },
+        'something': {
+            'value': 'sth',
+            'time': 'some time'
+        }
     },
-    'temperature': {
-        'value': '24',
-        'time': '2016-09-24T23:05:34Z'
-    },
-    'something': {
-        'value': 'sth',
-        'time': 'some time'
+    {
+        'id': 1,
+        'humidity': {
+            'value': '0',
+            'time': '2016-09-24T23:05:34Z'
+        },
+        'temperature': {
+            'value': '0',
+            'time': '2016-09-24T23:05:34Z'
+        },
+        'something': {
+            'value': 'sth',
+            'time': 'some time'
+        }
     }
-}
-broker_address = 'iot.ceit.aut.ac.ir'  # '127.0.0.1'
-broker_port = 58904  # 9998
-agent_id = 'b07882d6-5c28-597b-89f9-d250f74b0bad'
+]
 
 
 def on_message(client, userdata, message):
-    # print('Massage')
-    client.publish(agent_id, json.dumps(my_json))
+    print('Message')
+    req = json.loads(message.payload.decode('utf-8'))
+    for j in my_json:
+        if j['id'] == req['id']:
+            client.publish('get', json.dumps(j))
+            return
+    client.publish('get', '')
 
 
 def on_publish(client, userdata, result):
-    # print('Publish')
+    print('Publish')
     pass
 
 
 def on_connect(client, userdata, flags, rc):
-    # print('Connect')
-    client.subscribe(agent_id)
-    client.publish(agent_id, json.dumps(my_json))
+    print('Connect')
+    client.subscribe('agent')
 
 
 def on_disconnect(client, userdata, rc):
-    # print('Disconnect')
+    print('Disconnect')
     pass
 
 
