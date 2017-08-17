@@ -17,7 +17,7 @@ def get():
     """
     It calls when a request come from user
     note1: If requests are more than max, returns 'Too Many Requests Error'
-    note2: If requests are more than max, returns 'Too Many Requests Error'
+    note2: If requests response takes more than max, returns 'Request Timeout Error'
     :return:a json as an str
     """
     i = 0
