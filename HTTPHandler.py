@@ -10,6 +10,7 @@ import json
 import time
 
 app = Flask(__name__)
+app.threaded = True
 
 
 @app.route('/Get', methods=['POST'])

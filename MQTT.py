@@ -46,7 +46,7 @@ def on_message(client, userdata, message):
         if j['id'] == req['id']:
             client.publish('get', json.dumps(j))
             return
-    client.publish('get', '')
+    client.publish('get', '{}')
 
 
 def on_publish(client, userdata, result):
