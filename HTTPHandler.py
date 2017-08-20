@@ -4,7 +4,7 @@ When a request comes, we publish a request to MQTT and wait for response,
 then return the response in HTTP again!
 """
 from flask import Flask, request
-from Get import http_address, http_port, agent_connection_time, max_id
+from Config import http_address, http_port, agent_connection_time, max_id
 from MQTTHandler import client, get_result
 import json
 import time

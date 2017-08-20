@@ -1,7 +1,7 @@
 """
 We check if request take too long to response, then we return 'Request Timeout Error'
 """
-from Get import agent_connection_time, max_id, max_duration
+from Config import agent_connection_time, max_id, max_duration
 import threading
 import time
 

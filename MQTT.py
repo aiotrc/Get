@@ -2,7 +2,7 @@
 A TEST FILE FOR mqtt
 """
 import paho.mqtt.client as mqtt
-from Get import broker_address, broker_port
+from Config import broker_address, broker_port
 import json
 
 my_json = [
